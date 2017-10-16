@@ -94,29 +94,30 @@
 		
 		 </div> <!--end shopping-cart -->
 		</div> <!--end container -->
-	    
-        <table>
-        <thead>
-           <tr>
-                <th>Selecione</th>
-                <th>Produto</th>
-                <th>Cor</th>
-                <th>Quantidade</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-              <c:forEach var="produto" items="${listaDeproduto}">
-            	<tr>
-            		<td><input type="checkbox" name="selected" value="${produto.codigoProduto}"> </td>
-					<td>${produto.nomeProduto}</td>
-					<td>${produto.descricao}</td>
-					<td><input type="number" name="quantidade" id="${produto.codigoProduto}"></td>
-				</tr>
-            </c:forEach>
-            
-        </tbody>
-    </table>
+	    <form action="pedidos" method=post>
+	        <table>
+	        <thead>
+	           <tr>
+	                <th>Selecione</th>
+	                <th>Produto</th>
+	                <th>Cor</th>
+	                <th>Quantidade</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            
+	              <c:forEach var="produto" items="${listaDeproduto}">
+	            	<tr>
+	            		<td><input type="checkbox" name="codigo" value="${produto.codigoProduto}"> </td>
+						<td>${produto.nomeProduto}</td>
+						<td>${produto.descricao}</td>
+						<td><input type="number" min="0" name="quantidade" id="${produto.codigoProduto}"></td>
+					</tr>
+	            </c:forEach>
+	            
+	        </tbody>
+	    </table>
+    
 	    
 	    
 	
@@ -130,7 +131,9 @@
 		
 		<br />
 		<!-- Indicates a successful or positive action -->
-		<button type="button" id="finalizar" class="btn btn-success">Finalizar</button>
+		<!-- <button type="button" id="finalizar" class="btn btn-success">Finalizar</button> -->
+		<input type="submit" value="Enviar" class="btn btn-success">
+		</form>
 	    
 	    </section>
 	    <!-- /.content -->
@@ -185,11 +188,14 @@
 		var objeto = 
 		{ 
 				'pedidos[]' : [],
-				'quantidade' : ""
+				'quantidade[]' : [] 
 		};
 		$(":checked").each(function() {
 			objeto['pedidos[]'].push($(this).val());
-			objeto['quantidade'].val($("qtd").val());
+		});
+		
+		$("input[name='quantidade']").each(function() {
+			objeto['quantidade[]'].push($(this).val());
 		});
 		
 		
